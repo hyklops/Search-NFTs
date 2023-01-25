@@ -74,6 +74,7 @@ const Home = () => {
       </div>
       <div className="flex flex-col items-center justify-center mb-5">
         <input
+          className="border border-black rounded-md"
           onChange={(e) => {
             setWallet(e.target.value);
           }}
