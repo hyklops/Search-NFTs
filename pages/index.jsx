@@ -63,7 +63,10 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="mt-10">
+      <h1 className="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl ">
+        SEARCH NFTS
+      </h1>
       <div>
         <button
           onClick={connectWallet}
@@ -72,9 +75,9 @@ const Home = () => {
           {mmWallet}
         </button>
       </div>
-      <div className="flex flex-col items-center justify-center mb-5">
+      <div className="flex mt-10 flex-col items-center justify-center mb-5">
         <input
-          className="border border-black rounded-md"
+          className="border mb-2 border-black rounded-md"
           onChange={(e) => {
             setWallet(e.target.value);
           }}
@@ -92,11 +95,13 @@ const Home = () => {
         </button>
       </div>
       {NFTs ? (
-        <div className="flex flex-wrap gap-6 justify-center">{nftCard()}</div>
+        <div className="flex mt-10 flex-wrap gap-6 justify-center">
+          {nftCard()}
+        </div>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 
