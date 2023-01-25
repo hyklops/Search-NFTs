@@ -62,7 +62,6 @@ const Home = () => {
     });
   };
 
-  console.log(NFTs);
   return (
     <>
       <div>
