@@ -11,10 +11,12 @@ const Search = () => {
   const props = {
     searchWallet,
   };
+  // for testnet goerli: https://testnets-api.opensea.io/api/v1/assets?owner=${props.searchWallet}
+  // for ethereum: https://api.opensea.io/api/v1/assets?owner=${props.searchWallet}
 
   const fetchNFTs = async () => {
     const response = await fetch(
-      `https://api.opensea.io/api/v1/assets?owner=${props.searchWallet}`
+      `https://testnets-api.opensea.io/api/v1/assets?owner=${props.searchWallet}`
     ).then((response) => response.json());
     setNFTs(response);
   };
