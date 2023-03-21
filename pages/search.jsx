@@ -3,27 +3,21 @@ import { router, useRouter } from "next/router";
 
 const Search = () => {
   const [NFTs, setNFTs] = useState([]);
-
   const router = useRouter();
-  const {
-    query: { searchWallet },
-  } = router;
-  const props = {
-    searchWallet,
-  };
+  const { query: props } = router;
   // for testnet goerli: https://testnets-api.opensea.io/api/v1/assets?owner=${props.searchWallet}
   // for ethereum: https://api.opensea.io/api/v1/assets?owner=${props.searchWallet}
 
   const fetchNFTs = async () => {
     const response = await fetch(
-      `https://testnets-api.opensea.io/api/v1/assets?owner=${props.searchWallet}`
+      `https://testnets-api.opensea.io/api/v1/assets?owner=${props.address}`
     ).then((response) => response.json());
     setNFTs(response);
   };
 
   useEffect(() => {
     fetchNFTs();
-  }, [props.searchWallet]);
+  }, [props]);
 
   const nftCard = () => {
     return NFTs?.assets?.map((nft) => {

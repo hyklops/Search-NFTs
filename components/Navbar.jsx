@@ -1,12 +1,19 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { router, useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 export default function Navbar() {
   const [searchWallet, setSearchWallet] = useState("");
+  const { address } = useAccount();
+  const [a, setA] = useState(address);
+  useEffect(() => {
+    setA(address);
+  }, [address]);
+
   return (
-    <nav className="shadow-lg sticky top-0 w-full p-2">
+    <nav className=" shadow-lg sticky top-0 w-full p-2 bg-white bg-opacity-95 backdrop-blur-sm ">
       <div className="px-2 flex justify-between items-center ">
         <div className="flex items-center gap-10 w-9/12">
           <Link href="/" className="font-extrabold cursor-pointer block">
@@ -18,7 +25,10 @@ export default function Navbar() {
               onSubmit={(e) => {
                 return (
                   e.preventDefault(),
-                  router.push({ pathname: "/search", query: { searchWallet } })
+                  router.push({
+                    pathname: "/search",
+                    query: { address: searchWallet },
+                  })
                 );
               }}
             >
@@ -51,9 +61,23 @@ export default function Navbar() {
           </div>
         </div>
         <div className="flex items-center shrink-0 gap-5">
-          <a className="link">Marketplace</a>
-          <a className="link">Create NFT</a>
-          <a className="link">Profile</a>
+          <Link href="/" className="link">
+            Marketplace
+          </Link>
+          <Link href="/createNft" className="link">
+            Create NFT
+          </Link>
+          <a
+            onClick={(e) => {
+              return (
+                e.preventDefault(),
+                router.push({ pathname: "/search", query: { address: a } })
+              );
+            }}
+            className="link"
+          >
+            Profile
+          </a>
           <ConnectButton />
         </div>
       </div>

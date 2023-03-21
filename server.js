@@ -1,31 +1,24 @@
-// FOR API KEY HIDING
+const allowCors = (fn) => async (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  return await fn(req, res);
+};
 
-// const axios = require("axios");
-// const express = require("express");
-// const app = express();
-// require("dotenv").config();
-// const cors = require("cors");
-// app.use(cors());
+const handler = (req, res) => {
+  const d = new Date();
+  res.end(d.toString());
+};
 
-// const port = process.env.PORT || 3001;
-
-// app.use(express.urlencoded({ extended: true }));
-
-// app.get("/api", (req, res) => {
-//   const apiKey = process.env.API_KEY;
-//   const owner = req.query.owner;
-//   const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v2/${apiKey}/getNFTs/`;
-//   const fetchURL = `${baseURL}?owner=${owner}`;
-//   axios
-//     .get(fetchURL)
-//     .then((response) => {
-//       res.json(response.data);
-//     })
-//     .catch((error) => {
-//       res.json({ error: error.message });
-//     });
-// });
-
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+module.exports = allowCors(handler);
