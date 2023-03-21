@@ -24,7 +24,11 @@ const Home = () => {
     const items = await Promise.all(
       transaction.map(async (i) => {
         const tokenURI = await marketplaceContractRead.tokenURI(i.tokenId);
-        let meta = await axios.get(tokenURI);
+        let meta = await axios({
+          method: "get",
+          url: tokenURI,
+          accept: "text/plain",
+        });
         meta = meta.data;
         let price = ethers.utils.formatUnits(i.price.toString(), "ether");
         let item = {
